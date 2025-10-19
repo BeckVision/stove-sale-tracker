@@ -100,13 +100,19 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
+# settings.py
+LANGUAGE_CODE = 'uz'
+TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
+
+# Define available languages
+LANGUAGES = [
+    ('uz', 'Uzbek'),
+    ('en', 'English'),
+]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -125,3 +131,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/' 
 LOGOUT_REDIRECT_URL = '/'
+

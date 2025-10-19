@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}Log Production — Stove Tracker{% endblock %}
-{% block header %}🪵 Log Today's Production{% endblock %}
+{% block title %}Ishlab Chiqarishni Ro'yxatga Olish — Pechka Kuzatuvchisi{% endblock %}
+{% block header %}🪵 Bugungi Ishlab Chiqarishni Ro'yxatga Olish{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
@@ -10,7 +10,7 @@
             <div class="card-body p-4">
                 <form method="post">
                     {% csrf_token %}
-                    <p class="text-muted">Enter the quantity of each stove type you produced today. Unchanged items will be saved as zero.</p>
+                    <p class="text-muted">Bugun ishlab chiqargan har bir pechka turi miqdorini kiriting. O'zgartirilmagan elementlar nol sifatida saqlanadi.</p>
                     
                     {% for product in products %}
                     <div class="mb-3">
@@ -28,7 +28,7 @@
 
                     <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-success btn-lg">
-                           <i data-feather="save" class="icon"></i> Save Production Log
+                           <i data-feather="save" class="icon"></i> Ishlab Chiqarish Jurnalini Saqlash
                         </button>
                     </div>
                 </form>
@@ -37,7 +37,7 @@
 
         <div class="text-center mt-4">
             <a href="{% url 'worker_dashboard' %}" class="btn btn-link text-secondary">
-                <i data-feather="arrow-left" class="icon"></i> Back to Dashboard
+                <i data-feather="arrow-left" class="icon"></i> Boshqaruv Paneliga Qaytish
             </a>
         </div>
     </div>

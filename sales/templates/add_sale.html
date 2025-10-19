@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}Add Sale — Stove Tracker{% endblock %}
-{% block header %}📝 Record a New Sale{% endblock %}
+{% block title %}Sotuv Qo'shish — Pechka Kuzatuvchisi{% endblock %}
+{% block header %}📝 Yangi Sotuvni Ro'yxatga Olish{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -50,7 +50,7 @@
                     <input type="hidden" name="product_id" id="selected-product" required>
 
                     <div class="mb-4">
-                        <label class="form-label fs-5 fw-bold mb-3">1. Select Stove Type</label>
+                        <label class="form-label fs-5 fw-bold mb-3">1. Pechka Turini Tanlang</label>
                         <div class="row g-3">
                             {% for product in products %}
                             <div class="col-6 col-md-4">
@@ -58,19 +58,23 @@
                                     <div class="product-name">{{ product.name }}</div>
                                 </div>
                             </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <p class="text-muted text-center">Hozircha hech qanday mahsulot mavjud emas.</p>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
                     
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
-                             <label for="quantity" class="form-label fs-5 fw-bold">2. Quantity Sold</label>
-                            <input type="number" name="quantity" id="quantity" class="form-control form-control-lg" placeholder="e.g., 10" min="1" required>
+                            <label for="quantity" class="form-label fs-5 fw-bold">2. Sotilgan Miqdor</label>
+                            <input type="number" name="quantity" id="quantity" class="form-control form-control-lg" placeholder="masalan, 10" min="1" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="price-input" class="form-label fs-5 fw-bold">3. Total Price (SUM)</label>
+                            <label for="price-input" class="form-label fs-5 fw-bold">3. Umumiy Narx (SO'M)</label>
                             <div class="input-group">
-                                <span class="input-group-text">SUM</span>
+                                <span class="input-group-text">SO'M</span>
                                 <input type="text"
                                        id="price-input"
                                        class="form-control form-control-lg"
@@ -82,10 +86,9 @@
                         </div>
                     </div>
 
-
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary btn-lg">
-                            <i data-feather="check-circle" class="icon"></i> Record Sale
+                            <i data-feather="check-circle" class="icon"></i> Sotuvni Ro'yxatga Olish
                         </button>
                     </div>
                 </form>
@@ -93,7 +96,7 @@
         </div>
         <div class="text-center mt-4">
             <a href="{% url 'sale_list' %}" class="btn btn-link text-secondary">
-                <i data-feather="list" class="icon"></i> View All Sales
+                <i data-feather="list" class="icon"></i> Barcha Sotuvlarni Ko'rish
             </a>
         </div>
     </div>
@@ -103,6 +106,7 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("Add Sale JS yuklandi"); // Debug log
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach(card => {
         card.addEventListener('click', function() {
@@ -120,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let rawValue = e.target.value.replace(/\D/g, '');
             hiddenPriceInput.value = rawValue;
             if (rawValue) {
-                e.target.value = parseInt(rawValue, 10).toLocaleString('en-US');
+                e.target.value = parseInt(rawValue, 10).toLocaleString('uz-UZ');
             } else {
                 e.target.value = '';
             }
@@ -129,4 +133,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 {% endblock %}
-

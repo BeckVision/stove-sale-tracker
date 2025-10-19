@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load humanize %}
 
-{% block title %}My Earnings — Stove Tracker{% endblock %}
-{% block header %}💰 Investor Dashboard{% endblock %}
+{% block title %}Mening Foydam — Pechka Kuzatuvchisi{% endblock %}
+{% block header %}💰 Investor Boshqaruv Paneli{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -31,10 +31,9 @@
 </style>
 {% endblock %}
 
-
 {% block content %}
 <p class="text-muted text-center mb-4">
-    You receive <strong>{{ percentage }}%</strong> of all profits. Updates are in real-time.
+    Siz barcha foydaning <strong>{{ percentage }}%</strong> ni olasiz. Yangilanishlar real vaqtda amalga oshiriladi.
 </p>
 
 <!-- Summary Cards -->
@@ -42,24 +41,24 @@
     <div class="col-md-4">
         <div class="card text-center h-100">
             <div class="card-body">
-                <div class="metric-label">Today's Earnings</div>
-                <div class="metric-value text-success mt-2">{{ today_earnings|intcomma }} UGX</div>
+                <div class="metric-label">Bugungi Foyda</div>
+                <div class="metric-value text-success mt-2">{{ today_earnings|intcomma }} SO'M</div>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="card text-center h-100">
             <div class="card-body">
-                <div class="metric-label">This Week's Earnings</div>
-                <div class="metric-value mt-2">{{ week_earnings|intcomma }} UGX</div>
+                <div class="metric-label">Bu Haftadagi Foyda</div>
+                <div class="metric-value mt-2">{{ week_earnings|intcomma }} SO'M</div>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="card text-center h-100 bg-primary text-white">
             <div class="card-body">
-                <div class="metric-label" style="color: rgba(255,255,255,0.8);">Total Ever Earned</div>
-                <div class="metric-value text-white mt-2">{{ total_earnings|intcomma }} UGX</div>
+                <div class="metric-label" style="color: rgba(255,255,255,0.8);">Umumiy Topilgan Foyda</div>
+                <div class="metric-value text-white mt-2">{{ total_earnings|intcomma }} SO'M</div>
             </div>
         </div>
     </div>
@@ -68,7 +67,7 @@
 <!-- Last 7 Days Visualization -->
 <div class="card">
     <div class="card-header bg-white">
-        <h5 class="mb-0">Earnings – Last 7 Days</h5>
+        <h5 class="mb-0">Foyda – Oxirgi 7 Kun</h5>
     </div>
     <div class="card-body p-4">
         <div class="row text-center align-items-end">
