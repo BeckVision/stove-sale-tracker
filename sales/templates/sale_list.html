@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}All Sales — Stove Tracker{% endblock %}
+{% block header %}📈 Sales Overview{% endblock %}
+
+{% block content %}
+<!-- Summary Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body d-flex align-items-center">
+                <div class="bg-primary text-white p-3 rounded-3 me-3">
+                    <i data-feather="dollar-sign" style="width: 28px; height: 28px;"></i>
+                </div>
+                <div>
+                    <h6 class="card-subtitle text-muted mb-1">Total Revenue</h6>
+                    <h4 class="card-title mb-0 fw-bold">{{ total_revenue|intcomma }} SUM</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body d-flex align-items-center">
+                <div class="bg-success text-white p-3 rounded-3 me-3">
+                    <i data-feather="trending-up" style="width: 28px; height: 28px;"></i>
+                </div>
+                <div>
+                    <h6 class="card-subtitle text-muted mb-1">Total Profit</h6>
+                    <h4 class="card-title mb-0 fw-bold">{{ total_profit|intcomma }} SUM</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sales Table -->
+<div class="card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">All Sales Records</h5>
+        <a href="{% url 'add_sale' %}" class="btn btn-sm btn-primary">
+            <i data-feather="plus" class="icon"></i> Record New Sale
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" class="ps-4">Date</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Total Profit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in sales %}
+                    <tr>
+                        <td class="ps-4">{{ sale.date|date:"M d, Y, P" }}</td>
+                        <td>{{ sale.product.name }}</td>
+                        <td>{{ sale.quantity }}</td>
+                        <td>{{ sale.sale_price|intcomma }}</td>
+                        <td class="text-success fw-medium">+{{ sale.profit|intcomma }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted p-5">
+                            No sales have been recorded yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

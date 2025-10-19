@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Add Sale — Stove Tracker{% endblock %}
+{% block header %}📝 Record a New Sale{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #e9ecef;
+        border-radius: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        background-color: #fff;
+        padding: 1rem;
+        min-height: 100px;
+    }
+    .product-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    }
+    .product-card.selected {
+        border-color: var(--bs-primary);
+        background-color: #eef5ff;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    }
+    .product-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    .form-control-lg {
+        font-size: 1.25rem;
+        font-weight: 500;
+        text-align: center;
+        padding: 0.75rem 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <div class="card p-2">
+            <div class="card-body">
+                <form method="post" id="sale-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" id="selected-product" required>
+
+                    <div class="mb-4">
+                        <label class="form-label fs-5 fw-bold mb-3">1. Select Stove Type</label>
+                        <div class="row g-3">
+                            {% for product in products %}
+                            <div class="col-6 col-md-4">
+                                <div class="product-card" data-product-id="{{ product.id }}">
+                                    <div class="product-name">{{ product.name }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                             <label for="quantity" class="form-label fs-5 fw-bold">2. Quantity Sold</label>
+                            <input type="number" name="quantity" id="quantity" class="form-control form-control-lg" placeholder="e.g., 10" min="1" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="price-input" class="form-label fs-5 fw-bold">3. Total Price (SUM)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">SUM</span>
+                                <input type="text"
+                                       id="price-input"
+                                       class="form-control form-control-lg"
+                                       placeholder="7,800,000"
+                                       autocomplete="off"
+                                       required>
+                            </div>
+                            <input type="hidden" name="sale_price" id="sale-price-hidden">
+                        </div>
+                    </div>
+
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i data-feather="check-circle" class="icon"></i> Record Sale
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'sale_list' %}" class="btn btn-link text-secondary">
+                <i data-feather="list" class="icon"></i> View All Sales
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.addEventListener('click', function() {
+            productCards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            document.getElementById('selected-product').value = this.dataset.productId;
+        });
+    });
+
+    const priceInput = document.getElementById('price-input');
+    const hiddenPriceInput = document.getElementById('sale-price-hidden');
+
+    if (priceInput) {
+        priceInput.addEventListener('input', function(e) {
+            let rawValue = e.target.value.replace(/\D/g, '');
+            hiddenPriceInput.value = rawValue;
+            if (rawValue) {
+                e.target.value = parseInt(rawValue, 10).toLocaleString('en-US');
+            } else {
+                e.target.value = '';
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
+

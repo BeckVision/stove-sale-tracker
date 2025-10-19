@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}My Production — Stove Tracker{% endblock %}
+{% block header %}👷 Worker Dashboard{% endblock %}
+
+{% block content %}
+<!-- Summary Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body d-flex align-items-center">
+                 <div class="bg-success text-white p-3 rounded-3 me-3">
+                    <i data-feather="sun" style="width: 28px; height: 28px;"></i>
+                </div>
+                <div>
+                    <h6 class="card-subtitle text-muted mb-1">Today’s Earnings</h6>
+                    <h4 class="card-title mb-0 fw-bold">{{ today_earnings|intcomma }} SUM</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body d-flex align-items-center">
+                 <div class="bg-primary text-white p-3 rounded-3 me-3">
+                    <i data-feather="calendar" style="width: 28px; height: 28px;"></i>
+                </div>
+                <div>
+                    <h6 class="card-subtitle text-muted mb-1">This Week's Earnings</h6>
+                    <h4 class="card-title mb-0 fw-bold">{{ week_earnings|intcomma }} SUM</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Production History -->
+<div class="card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Production History</h5>
+        <a href="{% url 'add_production' %}" class="btn btn-sm btn-success">
+            <i data-feather="plus" class="icon"></i> Log Production
+        </a>
+    </div>
+    <div class="card-body p-0">
+        {% for date, data in grouped_logs.items %}
+        <div class="p-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0">{{ date|date:"l, F j, Y" }}</h6>
+                <span class="badge bg-success-subtle text-success-emphasis rounded-pill">
+                    Daily Total: {{ data.daily_total|intcomma }} SUM
+                </span>
+            </div>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for log in data.logs %}
+            <li class="list-group-item d-flex justify-content-between align-items-center ps-4">
+                <div>
+                    <span class="fw-medium">{{ log.quantity }} x {{ log.product.name }}</span>
+                    <small class="text-muted d-block">{{ log.date }}</small>
+                </div>
+                <span class="text-success fw-medium">+{{ log.earnings|intcomma }} SUM</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% empty %}
+        <div class="text-center text-muted p-5">
+            You haven't logged any production yet.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

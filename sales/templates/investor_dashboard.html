@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}My Earnings — Stove Tracker{% endblock %}
+{% block header %}💰 Investor Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    .metric-card .metric-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+    .metric-card .metric-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--bs-dark);
+    }
+    .day-bar-container {
+        height: 80px; /* Give space for the bar to grow upwards */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    .day-bar {
+        background: #e9ecef;
+        border-radius: 4px;
+        transition: height 0.3s ease-in-out;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<p class="text-muted text-center mb-4">
+    You receive <strong>{{ percentage }}%</strong> of all profits. Updates are in real-time.
+</p>
+
+<!-- Summary Cards -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="metric-label">Today's Earnings</div>
+                <div class="metric-value text-success mt-2">{{ today_earnings|intcomma }} UGX</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="metric-label">This Week's Earnings</div>
+                <div class="metric-value mt-2">{{ week_earnings|intcomma }} UGX</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100 bg-primary text-white">
+            <div class="card-body">
+                <div class="metric-label" style="color: rgba(255,255,255,0.8);">Total Ever Earned</div>
+                <div class="metric-value text-white mt-2">{{ total_earnings|intcomma }} UGX</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Last 7 Days Visualization -->
+<div class="card">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Earnings – Last 7 Days</h5>
+    </div>
+    <div class="card-body p-4">
+        <div class="row text-center align-items-end">
+            {% for day in last_7_days %}
+            <div class="col">
+                <div class="small fw-bold text-success">{{ day.earnings|intcomma }}</div>
+                <div class="day-bar-container mt-2">
+                    {% with max_earnings=week_earnings|add:1 %}
+                        {% widthratio day.earnings max_earnings 100 as bar_height %}
+                        <div class="day-bar bg-success bg-opacity-25" style="height: {{ bar_height }}%;"></div>
+                    {% endwith %}
+                </div>
+                <div class="small text-muted mt-2">{{ day.date|date:"D" }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

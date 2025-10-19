@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Log Production — Stove Tracker{% endblock %}
+{% block header %}🪵 Log Today's Production{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <p class="text-muted">Enter the quantity of each stove type you produced today. Unchanged items will be saved as zero.</p>
+                    
+                    {% for product in products %}
+                    <div class="mb-3">
+                        <label for="quantity_{{ product.id }}" class="form-label fw-medium">{{ product.name }}</label>
+                        <input type="number" 
+                               name="quantity_{{ product.id }}" 
+                               id="quantity_{{ product.id }}"
+                               class="form-control form-control-lg"
+                               min="0" 
+                               placeholder="0"
+                               value="0">
+                        <input type="hidden" name="product_{{ product.id }}" value="{{ product.id }}">
+                    </div>
+                    {% endfor %}
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success btn-lg">
+                           <i data-feather="save" class="icon"></i> Save Production Log
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'worker_dashboard' %}" class="btn btn-link text-secondary">
+                <i data-feather="arrow-left" class="icon"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
