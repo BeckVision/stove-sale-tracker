@@ -15,6 +15,26 @@ The app is designed for a small production/sales workflow where staff record pro
 - Uzbek-language interface and messages
 - Local SQLite development with `DATABASE_URL` support for PostgreSQL deployments
 
+## Screenshots
+
+Screenshots use local demo data.
+
+### Sales Dashboard
+
+![Sales dashboard](docs/screenshots/sales-dashboard.png)
+
+### Add Sale
+
+![Add sale form](docs/screenshots/add-sale.png)
+
+### Worker Dashboard
+
+![Worker dashboard](docs/screenshots/worker-dashboard.png)
+
+### Investor Dashboard
+
+![Investor dashboard](docs/screenshots/investor-dashboard.png)
+
 ## Stack
 
 - Python
