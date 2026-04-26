@@ -1,5 +1,7 @@
 # stove-sale-tracker
 
+[![CI](https://github.com/BeckVision/stove-sale-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/BeckVision/stove-sale-tracker/actions/workflows/ci.yml)
+
 Django web app for tracking daily stove sales, production output, worker earnings, investor shares, and profit calculations.
 
 The app is designed for a small production/sales workflow where staff record product sales, workers log production quantities, and investors can view their earnings.
